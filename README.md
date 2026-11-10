@@ -1,154 +1,160 @@
-# 🌦️ First Agentic AI Weather Agent
+# Weather Calling AI Agent
 
-My first hands-on Agentic AI project, built while learning the Hugging Face Agents Course.
+A tool-using AI agent built with Python and Google Gemini that retrieves weather information through the Open-Meteo API.
 
-This project demonstrates how an LLM can understand a user's request, select a tool, execute a Python function, observe the result, and generate a final response.
+This project demonstrates how a Large Language Model (LLM) can interpret user requests, generate structured actions, execute external tools, process observations, and produce responses.
 
-## 🚀 Project Overview
+## Project Overview
 
-This is a tool-using AI Weather Agent built with Python and Google Gemini.
+The Weather Calling AI Agent follows the Thought–Action–Observation cycle.
 
-Users can ask weather-related questions about different cities. The agent uses an LLM to generate a structured JSON action, executes a Python weather tool, retrieves current weather information using the Open-Meteo API, and generates a natural-language response.
+Instead of answering every question directly, the agent can select an appropriate Python tool, execute it, observe the result, and use that information to generate its final answer.
 
-## ⚙️ Tech Stack
+## Architecture
 
-- **Python** – Agent implementation
-- **Google Gemini API** – Language model
-- **Open-Meteo API** – Weather information
-- **JSON** – Structured action generation
-- **Requests** – HTTP API requests
-- **Google Colab** – Development environment
-
-## 🧠 Agent Architecture
-
-The project follows the Thought → Action → Observation cycle.
-
-1. **Thought:** The LLM understands the user's request and decides what to do.
-2. **Action:** The LLM generates a JSON action specifying the tool and its input.
-3. **Parsing:** Python extracts and validates the JSON action.
-4. **Tool Execution:** The Python runtime executes the selected weather function.
-5. **Observation:** The weather API result is returned to the agent.
-6. **Context Update:** The observation is appended to the conversation.
-7. **Final Answer:** The LLM uses the observation to generate the final response.
-
-## 🔄 Workflow
-
-User Question  
-↓  
-Gemini LLM  
-↓  
-Thought + JSON Action  
-↓  
-Stop and Parse  
-↓  
-Python Tool Execution  
-↓  
-Open-Meteo Weather API  
-↓  
-Observation  
-↓  
-Updated Context  
-↓  
-Gemini LLM  
-↓  
+```text
+User Question
+     |
+     v
+Google Gemini LLM
+     |
+     v
+Thought + JSON Action
+     |
+     v
+Stop and Parse
+     |
+     v
+Action Validation
+     |
+     v
+Python Weather Tool
+     |
+     v
+Open-Meteo API
+     |
+     v
+Observation
+     |
+     v
+Updated Conversation Context
+     |
+     v
+Gemini LLM
+     |
+     v
 Final Answer
-
-## ✨ Key Features
-
-- LLM integration using Google Gemini.
-- JSON-based action generation.
-- Stop and Parse approach.
-- Python tool execution.
-- JSON extraction and validation.
-- Live weather information through Open-Meteo.
-- Observation handling and context updates.
-- Basic action and input validation.
-
-## 🛠️ How to Run
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/Sai-kadali1124/first-agentic-ai-weather-agent.git
 ```
 
-### 2. Open the Notebook
+## Key Features
 
-Open `My_First_AI_Agent_Clean.ipynb` using Google Colab.
+- LLM integration using Google Gemini.
+- Structured JSON action generation.
+- Stop and Parse approach.
+- Python-based tool execution.
+- JSON parsing and validation.
+- Weather information retrieval using Open-Meteo.
+- Observation handling and context updates.
+- Basic action allowlisting and input validation.
 
-### 3. Configure Gemini API Key
+## Technology Stack
 
-- Create an API key using [Google AI Studio](https://aistudio.google.com/apikey).
-- Open Google Colab Secrets.
-- Add a secret named `GEMINI_API_KEY`.
-- Enable notebook access.
+| Technology | Purpose |
+|---|---|
+| Python | Agent implementation |
+| Google Gemini | Language model |
+| Open-Meteo API | Weather information |
+| Requests | HTTP communication |
+| JSON | Structured action representation |
+| Google Colab | Development environment |
 
-Never hardcode or publish your API key.
+## Project Structure
 
-### 4. Run the Notebook
+```text
+weather-calling-ai-agent/
+│
+├── My_First_Weather_AI_Agent.ipynb
+└── README.md
+```
 
-Execute the notebook cells from top to bottom.
+## Getting Started
 
-### 5. Ask a Weather Question
+### Prerequisites
 
-Example:
+- A Google account
+- Google Colab
+- A Google Gemini API key
+- Internet connection
+
+### Setup
+
+1. Open the Jupyter notebook in Google Colab.
+2. Install the required Python libraries if they are not already available:
+
+```bash
+pip install openai requests
+```
+
+3. Create a Gemini API key through [Google AI Studio](https://aistudio.google.com/apikey).
+4. Store the key in Google Colab Secrets using the name `GEMINI_API_KEY`.
+5. Enable notebook access to the secret.
+6. Run the notebook cells from top to bottom.
+
+### Example Request
 
 ```text
 What's the weather in London?
 ```
 
-The agent will retrieve weather information and generate a response.
+The agent generates a weather-tool action, executes the Python function, receives the API observation, and generates a final response.
 
-## 📚 Concepts Learned
+## Learning Outcomes
 
-Through this project, I practised:
+This project helped me understand and implement:
 
-- Large Language Models (LLMs)
-- Inference APIs
-- System Prompts
-- Thought-Action-Observation Cycle
-- JSON Agents
-- Stop and Parse Approach
-- Python Functions as Tools
-- JSON Parsing
-- Input Validation
-- API Integration
-- Agent Context Management
-- Basic Agent Security
+- LLM inference and API integration
+- System prompts
+- Thought–Action–Observation cycle
+- JSON-based tool calling
+- Stop and Parse approach
+- Python functions as tools
+- API integration
+- Input validation
+- Context management
+- Basic agent security
 
-## 🔐 Security Considerations
+## Security Considerations
 
-- Store API keys in Colab Secrets or environment variables.
-- Validate generated actions before execution.
-- Allow only explicitly registered tools.
-- Validate tool arguments.
-- Avoid executing arbitrary LLM-generated code.
+- API credentials are stored outside the source code.
+- Only registered tools are allowed to execute.
+- Tool arguments are validated before execution.
+- Arbitrary LLM-generated code is not executed.
+- This is an educational prototype, not a production-ready system.
 
-## ⚠️ Limitations
+## Limitations
 
-- This is an educational prototype, not a production-ready agent.
-- The agent currently supports a weather tool.
-- Tool selection relies on LLM-generated JSON.
-- API availability and rate limits may affect requests.
-- Weather information is based on Open-Meteo weather-model data and may differ from local weather-station observations.
+- Currently focused on weather-related requests.
+- Weather information depends on Open-Meteo API availability.
+- Weather data is based on numerical weather models and may differ from local weather-station readings.
+- The project uses a simple tool execution workflow rather than a production-grade agent framework.
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Add more tools such as web search and calculator.
-- Support multiple tool calls.
-- Add a Streamlit web interface.
-- Improve error handling and security.
-- Explore `smolagents` and LangGraph.
-- Deploy the agent as a web application.
+- Implement multi-tool workflows.
+- Add conversation memory.
+- Introduce stronger security controls.
+- Build a Streamlit user interface.
+- Explore frameworks such as smolagents and LangGraph.
 
-## 🙌 Learning Journey
+## Author
 
-This is my first practical Agentic AI project. I built it to understand how LLMs interact with external tools and how the Thought-Action-Observation cycle works in a real Python implementation.
+**Sai Manikanta Kadali**
 
-**Learning by building, one project at a time.**
+B.Tech Computer Science and Engineering Student
+
+Interested in Artificial Intelligence, Agentic AI, Large Language Models, and Software Engineering.
 
 ---
 
-Weather data: [Open-Meteo](https://open-meteo.com/)  
-LLM: [Google Gemini](https://ai.google.dev/)  
-Development: [Google Colab](https://colab.research.google.com/)
+*Learning by building, experimenting, and continuously improving.*
